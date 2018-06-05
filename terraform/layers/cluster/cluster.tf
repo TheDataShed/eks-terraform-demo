@@ -14,6 +14,9 @@ module "vpc" {
   tags = {
     Terraform   = "true"
     Environment = "${terraform.workspace}"
+
+    # Mirror a tag that EKS will apply
+    "kubernetes.io/cluster/eks-cluster" = "shared"
   }
 }
 
