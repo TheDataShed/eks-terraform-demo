@@ -1,0 +1,14 @@
+# MacOS
+.DS_Store
+
+#PyCharm
+.idea/
+
+# K8s binary
+kubectl
+
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info
