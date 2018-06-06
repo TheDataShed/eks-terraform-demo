@@ -6,7 +6,7 @@ resource "aws_eks_cluster" "cluster" {
     subnet_ids = ["${var.cluster_subnets}"]
 
     security_group_ids = [
-      "${aws_security_group.cluster.id}",
+      "${var.sg_id_cluster}",
     ]
   }
 }

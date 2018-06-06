@@ -5,12 +5,12 @@ output "vpc_id" {
 
 output "endpoint" {
   description = "Endpoint of the cluster."
-  value       = "${module.eks.endpoint}"
+  value       = "${module.eks_masters.endpoint}"
 }
 
 output "cluster_id" {
   description = "The name of the cluster."
-  value       = "${module.eks.cluster_id}"
+  value       = "${module.eks_masters.cluster_id}"
 }
 
 ### kubecfg
@@ -21,8 +21,8 @@ locals {
 apiVersion: v1
 clusters:
 - cluster:
-    server: ${module.eks.endpoint}
-    certificate-authority-data: ${module.eks.kubeconfig-certificate-authority-data}
+    server: ${module.eks_masters.endpoint}
+    certificate-authority-data: ${module.eks_masters.kubeconfig-certificate-authority-data}
   name: kubernetes
 contexts:
 - context:
@@ -41,7 +41,7 @@ users:
       args:
         - "token"
         - "-i"
-        - "${module.eks.cluster_id}"
+        - "${module.eks_masters.cluster_id}"
 
 KUBECONFIG
 }

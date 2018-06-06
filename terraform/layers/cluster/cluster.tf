@@ -23,17 +23,39 @@ module "vpc" {
 module "iam" {
   source = "../../modules/iam"
 
-  role_arn_eks_cluster_policy = "${var.role_arn_eks_cluster_policy}"
-  role_arn_eks_service_policy = "${var.role_arn_eks_service_policy}"
+  policy_arn_eks_cni     = "${var.policy_arn_eks_cni}"
+  policy_arn_eks_service = "${var.policy_arn_eks_service}"
+  policy_arn_ecr_read    = "${var.policy_arn_ecr_read}"
+  policy_arn_eks_cluster = "${var.policy_arn_eks_cluster}"
+  policy_arn_eks_worker  = "${var.policy_arn_eks_worker}"
 }
 
-module "eks" {
-  source = "../../modules/eks"
+module "security" {
+  source       = "../../modules/security"
+  vpc_id       = "${module.vpc.vpc_id}"
+  cluster_name = "${var.cluster_name}"
+}
 
-  cluster_name = "eks-cluster"
+module "eks_masters" {
+  source = "../../modules/eks-masters"
 
-  role_arn = "${module.iam.role_arn_eks_basic}"
+  cluster_name = "${var.cluster_name}"
 
-  vpc_id          = "${module.vpc.vpc_id}"
+  role_arn = "${module.iam.role_arn_eks_basic_masters}"
+
   cluster_subnets = "${module.vpc.public_subnets}"
+
+  sg_id_cluster = "${module.security.sg_id_masters}"
+}
+
+module "eks_workers" {
+  source = "../../modules/eks-workers"
+
+  # Use module output to wait for masters to create.
+  cluster_name = "${module.eks_masters.cluster_id}"
+
+  instance_profile_name_workers = "${module.iam.instance_profile_name_workers}"
+
+  worker_subnets = "${module.vpc.public_subnets}"
+  sg_id_workers  = "${module.security.sg_id_workers}"
 }

@@ -2,6 +2,9 @@
 
 A very basic example of an EKS cluster created with Terraform.
 
+I followed this [AWS docs page](https://docs.aws.amazon.com/eks/latest/userguide/getting-started.html)
+and converted the CloudFormation templates in to Terraform
+
 ## Requirements
 
 The following tools must all be available on your PATH:
@@ -41,14 +44,25 @@ An IAM role with the required two managed policies:
 - AmazonEKSClusterPolicy
 - AmazonEKSServicePolicy
 
+### Security
+
+Security groups for the EKS cluster and worker nodes
+
 ### EKS
 
 The EKS cluster.
 An empty security group for the cluster.
 
+### Workers
+
+An autoscaling group that provisions worker nodes.
+
 ## Creating Your Cluster
 
 ### Deployment
+
+Currently the resources get deployed to the `us-east-1` region.
+This is what is set in the `global.tfvars` file.
 
 To deploy out the resources, simply run:
 
@@ -71,6 +85,42 @@ Use this config file with:
 And check connectivity to your cluster:
 
     kubectl get componentstatus
+
+### Add Workers
+
+Workers will not connect to your cluster unless you allow the role
+on the worker nodes to authenticate with your cluster.
+
+You will need to apply the below yaml snippet to your cluster after
+you've replaced the `rolearn` line with the worker role.
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: <ARN of instance role (not instance profile)>
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+        - system:bootstrappers
+        - system:nodes
+```
+
+***todo** make this into a command that uses `terraform output`*
+
+### Clean Up
+
+Delete the cluster and associated resources with:
+
+    terraform destroy -var-file=../global.tfvars 
+
+This will destroy all the resources at once and will probably fail
+if you've made any manual edits to the resources.
+
+***todo** apply and destroy wrapper scripts.*
 
 ## Project Structure
 

@@ -3,11 +3,6 @@ variable "role_arn" {
   type        = "string"
 }
 
-variable "vpc_id" {
-  description = "ID of the VPC to deploy the cluster to."
-  type        = "string"
-}
-
 variable "cluster_subnets" {
   description = "Subnets to deploy the cluster in to."
   type        = "list"
@@ -15,5 +10,10 @@ variable "cluster_subnets" {
 
 variable "cluster_name" {
   description = "Name of the cluster"
+  type        = "string"
+}
+
+variable "sg_id_cluster" {
+  description = "ID of the security group to attach to the cluster."
   type        = "string"
 }
