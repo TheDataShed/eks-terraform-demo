@@ -111,6 +111,29 @@ data:
 
 ***todo** make this into a command that uses `terraform output`*
 
+### Deploy Sample Application
+
+You can now run pods on your workers, so why not start with a
+guestbook application!
+
+You can deploy it out with the shell script provided:
+
+    cd kube/examples/guestbook
+    ./deploy-guestbook.sh
+
+This will apply the six `yaml` files in the guestbook directory.
+
+Once the guestbook service is deployed, you can get the url by running:
+
+    kubectl get services -o wide
+
+Once the external IP address is available, go to the address at port 3000.
+
+For example: http://a7a95c2b9e69711e7b1a3022fdcfdf2e-1985673473.us-east-1.elb.amazonaws.com:3000
+
+It may take a while for the DNS to propagate and your guestbook to be visible
+in your browser.
+
 ### Clean Up
 
 Delete the cluster and associated resources with:
