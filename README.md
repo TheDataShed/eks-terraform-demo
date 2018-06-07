@@ -7,11 +7,11 @@ and converted the CloudFormation templates in to Terraform
 
 ## Requirements
 
-### AWS Account
+### AWS Account
 
 You'll need somewhere to put your EKS cluster!
 
-#### CLI Tools
+#### CLI Tools
 
 The following tools must all be available on your PATH:
 
@@ -52,7 +52,7 @@ An IAM role with the required two managed policies:
 - AmazonEKSClusterPolicy
 - AmazonEKSServicePolicy
 
-### Security
+### Security
 
 Security groups for the EKS cluster and worker nodes
 
@@ -61,7 +61,7 @@ Security groups for the EKS cluster and worker nodes
 The EKS cluster.
 An empty security group for the cluster.
 
-### Workers
+### Workers
 
 An autoscaling group that provisions worker nodes.
 
@@ -94,7 +94,7 @@ And check connectivity to your cluster:
 
     kubectl get componentstatus
 
-### Add Workers
+### Add Workers
 
 Workers will not connect to your cluster unless you allow the role
 on the worker nodes to authenticate with your cluster.
@@ -146,7 +146,7 @@ For example: http://a7a95c2b9e69711e7b1a3022fdcfdf2e-1985673473.us-east-1.elb.am
 It may take a while for the DNS to propagate and your guestbook to be visible
 in your browser.
 
-### Clean Up
+### Clean Up
 
 Delete the cluster and associated resources with:
 

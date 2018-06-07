@@ -13,7 +13,7 @@ variable "cluster_name" {
   type        = "string"
 }
 
-### AWS managed policies
+### AWS managed policies
 variable "policy_arn_eks_cluster" {
   description = "ARN of the default policy, AmazonEKSClusterPolicy."
   type        = "string"

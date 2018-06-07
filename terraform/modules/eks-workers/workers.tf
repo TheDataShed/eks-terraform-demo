@@ -1,4 +1,4 @@
-### Hardcoding a lot of values for now.
+### Hardcoding a lot of values for now.
 
 resource "aws_autoscaling_group" "eks_workers" {
   name = "eks-workers"
@@ -46,11 +46,11 @@ data "template_file" "user_data" {
   template = "${file("${path.module}/user-data.tpl")}"
 
   vars {
-    # Hardcoded region
+    # Hardcoded region
     aws_region   = "us-east-1"
     cluster_name = "${var.cluster_name}"
 
-    # Hardcoded to 17 which is the max for t2.medium
+    # Hardcoded to 17 which is the max for t2.medium
     max_pods = 17
   }
 }

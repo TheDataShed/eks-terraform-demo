@@ -1,4 +1,4 @@
-### Masters
+### Masters
 resource "aws_iam_role" "eks_basic_masters" {
   description = "The minimum permissions for a functioning eks cluster."
 
@@ -16,7 +16,7 @@ resource "aws_iam_role_policy_attachment" "eks_masters_service" {
   policy_arn = "${var.policy_arn_eks_service}"
 }
 
-### Workers
+### Workers
 resource "aws_iam_instance_profile" "eks_basic_workers" {
   name = "eks-basic-access-workers"
 

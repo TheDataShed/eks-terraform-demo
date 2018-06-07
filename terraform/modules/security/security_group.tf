@@ -12,7 +12,7 @@ resource "aws_security_group" "workers" {
   vpc_id = "${var.vpc_id}"
 }
 
-### SG Rules HTTPS worker to master
+### SG Rules HTTPS worker to master
 resource "aws_security_group_rule" "in_worker_to_master_https" {
   description = "HTTPS communation from the worker nodes."
 
@@ -42,7 +42,7 @@ resource "aws_security_group_rule" "out_worker_to_all" {
   security_group_id = "${aws_security_group.workers.id}"
 }
 
-### SG Rules All TCP master to worker
+### SG Rules All TCP master to worker
 resource "aws_security_group_rule" "in_master_to_worker_all_tcp" {
   description = "TCP communication from master nodes."
 
@@ -69,7 +69,7 @@ resource "aws_security_group_rule" "out_master_to_worker_all_tcp" {
   source_security_group_id = "${aws_security_group.workers.id}"
 }
 
-### SG Rules All worker to worker
+### SG Rules All worker to worker
 resource "aws_security_group_rule" "in_worker_to_worker_all" {
   description = "All communication in from other worker nodes."
 
@@ -83,7 +83,7 @@ resource "aws_security_group_rule" "in_worker_to_worker_all" {
   source_security_group_id = "${aws_security_group.workers.id}"
 }
 
-#### ssh all to worker
+#### ssh all to worker
 #resource "aws_security_group_rule" "in_all_to_worker_ssh" {
 #  description = "ssh in from anywhere."
 #
