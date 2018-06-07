@@ -1,6 +1,6 @@
 aws_region = "us-east-1"
 
-availablilty_zones = [
+availability_zones = [
   "us-east-1a",
   "us-east-1c",
   "us-east-1d",

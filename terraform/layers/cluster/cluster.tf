@@ -5,7 +5,7 @@ module "vpc" {
   name = "eks-cluster"
   cidr = "10.0.0.0/20"
 
-  azs            = ["${var.availablilty_zones}"]
+  azs            = ["${var.availability_zones}"]
   public_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
 
   enable_nat_gateway = false

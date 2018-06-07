@@ -7,17 +7,25 @@ and converted the CloudFormation templates in to Terraform
 
 ## Requirements
 
+### AWS Account
+
+You'll need somewhere to put your EKS cluster!
+
+#### CLI Tools
+
 The following tools must all be available on your PATH:
 
-### [`terraform`](https://www.terraform.io/)
+#### [`terraform`](https://www.terraform.io/)
 
-### [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+Basic Terraform knowledge is assumed
+
+#### [`kubectl`](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 Make sure your client is v1.10 or above:
 
     kubectl version --client
 
-### [`heptio-authenticator-aws`](https://github.com/heptio/authenticator)
+#### [`heptio-authenticator-aws`](https://github.com/heptio/authenticator)
 
 Linux:
 
@@ -109,7 +117,11 @@ data:
         - system:nodes
 ```
 
-***todo** make this into a command that uses `terraform output`*
+This file is outputted by terraform, populated with the correct role.
+
+To apply it, run:
+
+    terraform output auth_config_map | kubectl apply -f -
 
 ### Deploy Sample Application
 
@@ -125,7 +137,7 @@ This will apply the six `yaml` files in the guestbook directory.
 
 Once the guestbook service is deployed, you can get the url by running:
 
-    kubectl get services -o wide
+    kubectl get services -o wide -n guestbook
 
 Once the external IP address is available, go to the address at port 3000.
 

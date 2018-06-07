@@ -3,7 +3,7 @@ variable "aws_region" {
   description = "Region to deploy all resources to."
 }
 
-variable "availablilty_zones" {
+variable "availability_zones" {
   type        = "list"
   description = "AZs to deploy all resources to."
 }
