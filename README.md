@@ -11,7 +11,7 @@ and converted the CloudFormation templates in to Terraform
 
 You'll need somewhere to put your EKS cluster!
 
-#### CLI Tools
+### CLI Tools
 
 The following tools must all be available on your PATH:
 
@@ -47,10 +47,16 @@ from the [Terraform Registry](https://registry.terraform.io/).
 
 ### IAM
 
-An IAM role with the required two managed policies:
+An IAM role for the EKS masters with the required two managed policies:
 
 - AmazonEKSClusterPolicy
 - AmazonEKSServicePolicy
+
+An IAM role for the worker nodes with the required three managed policies:
+
+- AmazonEKSWorkerNodePolicy
+- AmazonEKS_CNI_Policy
+- AmazonEC2ContainerRegistryReadOnly
 
 ### Security
 
@@ -63,7 +69,7 @@ An empty security group for the cluster.
 
 ### Workers
 
-An autoscaling group that provisions worker nodes.
+An auto scaling group that provisions worker nodes.
 
 ## Creating Your Cluster
 
@@ -148,12 +154,22 @@ in your browser.
 
 ### Clean Up
 
+#### Sample Application
+
+You can delete the sample application by deleting its namespace:
+
+    kubectl delete namespace guestbook
+
+#### Cluster
 Delete the cluster and associated resources with:
 
     terraform destroy -var-file=../global.tfvars 
 
 This will destroy all the resources at once and will probably fail
 if you've made any manual edits to the resources.
+
+If you've deployed any external services such as the example guestbook,
+make sure you delete those first, or the AWS load balancers won't be deleted.
 
 ***todo** apply and destroy wrapper scripts.*
 
