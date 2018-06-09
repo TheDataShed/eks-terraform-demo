@@ -26,6 +26,10 @@ resource "aws_autoscaling_group" "eks_workers" {
 
     propagate_at_launch = true
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_launch_configuration" "eks_workers" {
@@ -40,6 +44,9 @@ resource "aws_launch_configuration" "eks_workers" {
   iam_instance_profile        = "${var.instance_profile_name_workers}"
   associate_public_ip_address = true
   user_data                   = "${data.template_file.user_data.rendered}"
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 data "template_file" "user_data" {
