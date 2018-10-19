@@ -136,8 +136,10 @@ guestbook application!
 
 You can deploy it out with the shell script provided:
 
-    cd kube/examples/guestbook
-    ./deploy-guestbook.sh
+```console
+cd kube/examples/guestbook
+./deploy-guestbook.sh
+```
 
 This will apply the six `yaml` files in the guestbook directory.
 
@@ -171,7 +173,7 @@ if you've made any manual edits to the resources.
 If you've deployed any external services such as the example guestbook,
 make sure you delete those first, or the AWS load balancers won't be deleted.
 
-***todo** apply and destroy wrapper scripts.*
+***TODO** apply and destroy wrapper scripts.*
 
 ## Project Structure
 
@@ -186,4 +188,4 @@ You'd also need to provide the subnets to put the cluster in.
 
 ## Contributing
 
-Any comments and improvements welcomed!
+Any comments and improvements are welcome!
